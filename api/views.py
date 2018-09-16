@@ -44,7 +44,7 @@ def seach_team(request):
 
 @csrf_exempt
 def load_team(request):
-	id = request.POST.get('unique_id')
+	id = request.GET.get('unique_id')
 	if id is None:
 		return JsonResponse({
 			'success': False,
@@ -81,7 +81,7 @@ def save_fix(request):
 			'success': False,
 			'message': 'Invalid job.'
 		})
-	for job in job_list.split(','):
+	for job in job_list:
 		if job not in Team.JOB:
 			return JsonResponse({
 				'success': False,
@@ -95,14 +95,15 @@ def save_fix(request):
 			'message': 'Invalid unique_id.'
 		})
 
-	Team.objects.filter(id=id).update(**{fix_type: job_list})
+	Team.objects.filter(id=id).update(**{fix_type: ",".join(job_list)})
 	return JsonResponse({'success': True})
 
 
 @csrf_exempt
-def save_item(request):
+def save_job(request):
 	id = request.POST.get('unique_id')
 	job = request.POST.get('job')
+	data_type = request.POST.get('data_type')
 	item_status = request.POST.get('item_status')
 
 	if job not in Team.JOB:
@@ -118,8 +119,13 @@ def save_item(request):
 			'message': 'Invalid unique_id.'
 		})
 
+	if data_type == 'bis':
+		save_target = job + '_BIS'
+	else:
+		data_type = job
+
 	try:
-		Team.objects.filter(id=id).update(**{job: item_status})
+		Team.objects.filter(id=id).update(**{save_target: item_status})
 	except:
 		return JsonResponse({
 			'success': False,

@@ -23,39 +23,64 @@ class Team(models.Model):
     fix_right = models.CharField(max_length=128, default="")
 
     # Character Field Meaning
-    # 2^0: Exist Flag
-    # 2^1: Weapon
-    # 2^2: SubWeapon
-    # 2^3: Head
-    # 2^4: Body
-    # 2^5: Hands
-    # 2^6: Waist
-    # 2^7: Legs
-    # 2^8: Feet
-    # 2^9: Earrings
-    # 2^10: Necklace
-    # 2^11: Bracelet
-    # 2^12: Ring Left
-    # 2^13: Ring Right
-    # 2^14:
-    # 2^15:
-    # 2^16:
-    PLD = models.PositiveSmallIntegerField(default=0)
-    WAR = models.PositiveSmallIntegerField(default=0)
-    DRK = models.PositiveSmallIntegerField(default=0)
+    # 0: not selected
+    # 1: normal
+    # 2: crafted
+    # 3: slate
+    # 4: augmented
+    # 5: savage
 
-    WHM = models.PositiveSmallIntegerField(default=0)
-    SCH = models.PositiveSmallIntegerField(default=0)
-    AST = models.PositiveSmallIntegerField(default=0)
+    # 2^ 0: Exist Flag (0=not_exist, 1=exist)
+    # 2^ 1~3: Weapon
+    # 2^ 4~6: SubWeapon
+    # 2^ 7~9: Head
+    # 2^ 10~12: Body
+    # 2^ 13~15: Hands
+    # 2^ 16~18: Waist
+    # 2^ 19~21: Legs
+    # 2^ 22~24: Feet
+    # 2^ 25~27: Earrings
+    # 2^ 28~30: Necklace
+    # 2^ 31~33: Bracelet
+    # 2^ 34~36: Ring Left
+    # 2^ 37~39: Ring Right
+    PLD = models.BigIntegerField(default=0)
+    WAR = models.BigIntegerField(default=0)
+    DRK = models.BigIntegerField(default=0)
 
-    BRD = models.PositiveSmallIntegerField(default=0)
-    MCH = models.PositiveSmallIntegerField(default=0)
+    WHM = models.BigIntegerField(default=0)
+    SCH = models.BigIntegerField(default=0)
+    AST = models.BigIntegerField(default=0)
 
-    MNK = models.PositiveSmallIntegerField(default=0)
-    NIN = models.PositiveSmallIntegerField(default=0)
-    DRG = models.PositiveSmallIntegerField(default=0)
-    SAM = models.PositiveSmallIntegerField(default=0)
+    BRD = models.BigIntegerField(default=0)
+    MCH = models.BigIntegerField(default=0)
 
-    BLM = models.PositiveSmallIntegerField(default=0)
-    SMN = models.PositiveSmallIntegerField(default=0)
-    RDM = models.PositiveSmallIntegerField(default=0)
+    MNK = models.BigIntegerField(default=0)
+    NIN = models.BigIntegerField(default=0)
+    DRG = models.BigIntegerField(default=0)
+    SAM = models.BigIntegerField(default=0)
+
+    BLM = models.BigIntegerField(default=0)
+    SMN = models.BigIntegerField(default=0)
+    RDM = models.BigIntegerField(default=0)
+
+
+    PLD_BIS = models.BigIntegerField(default=0)
+    WAR_BIS = models.BigIntegerField(default=0)
+    DRK_BIS = models.BigIntegerField(default=0)
+
+    WHM_BIS = models.BigIntegerField(default=0)
+    SCH_BIS = models.BigIntegerField(default=0)
+    AST_BIS = models.BigIntegerField(default=0)
+
+    BRD_BIS = models.BigIntegerField(default=0)
+    MCH_BIS = models.BigIntegerField(default=0)
+
+    MNK_BIS = models.BigIntegerField(default=0)
+    NIN_BIS = models.BigIntegerField(default=0)
+    DRG_BIS = models.BigIntegerField(default=0)
+    SAM_BIS = models.BigIntegerField(default=0)
+
+    BLM_BIS = models.BigIntegerField(default=0)
+    SMN_BIS = models.BigIntegerField(default=0)
+    RDM_BIS = models.BigIntegerField(default=0)

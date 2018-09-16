@@ -1,0 +1,233 @@
+body {
+    padding: 0;
+}
+hr {
+	background: #524D52;
+	height: 1px;
+	border-top: 1px solid #1B1B1B;
+	border-bottom: 1px solid #5A5A5A;
+	margin: 3px 0 3px -10px;
+}
+input {
+    border: none;
+    border-bottom: 1px solid #EEE1C5;
+    background: transparent;
+	color: #EEE1C5;
+    font-size: 16px;
+    padding: 0 0 3px 5px;
+    border-bottom-style: dashed;
+    width: 300px;
+}
+input:focus {
+    outline: none;
+}
+.outer_1 {
+	border: 1px solid #444444;
+	border-radius: 5px;
+}
+.outer_2 {
+	border: 2px solid #94865A;
+	border-radius: 5px;
+}
+.outer_3 {
+	border: 1px solid #5A5142;
+	border-radius: 5px;
+}
+.sheet {
+	border: 1px solid #1B1B1B;
+	border-radius: 5px;
+	padding: 7px 10px;
+	background: #313131;
+	color: #EEE1C5;
+}
+.sheet_title {
+    border-bottom: 1px solid #EEE1C5;
+    padding-bottom: 5px;
+}
+
+
+.header {
+    background: #fafbfc;
+    border-bottom: 1px solid #e1e4e8;
+}
+.header_box {
+    width: 800px;
+    margin: auto;
+}
+.title {
+    font-size: 18px;
+    line-height: 26px;
+    margin: 10px 5px;
+}
+#unique_id {
+    font-size: 16px;
+}
+#team_name {
+    font-weight: bold;
+}
+
+.menu {
+    height: 21px;
+    padding: 7px 15px 8px 15px;
+    display: inline-block;
+    border: solid transparent;
+    border-width: 3px 1px 1px 1px;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    margin-bottom: -1px;
+    user-select: none;
+}
+.menu.active {
+    border-color: #e36209 #e1e4e8 transparent;
+    background: #fff;
+}
+
+.tab {
+    display: none;
+}
+.body {
+    background: #fff;
+    width: 800px;
+    margin: auto;
+    margin-top: 20px;
+}
+.fix_item_title {
+    font-weight: bold;
+}
+.fix_item_box {
+    margin-top: 10px;
+}
+.fix_item_img {
+    width: 40px;
+    height: 40px;
+	vertical-align: bottom;
+    margin-right: 5px;
+}
+.job_list {
+    display: inline-block;
+    height: 40px;
+	vertical-align: bottom;
+}
+.add_job {
+    display: inline-block;
+    line-height: 30px;
+    padding: 4px;
+    margin-left: 5px;
+    border: 1px solid #616161;
+    cursor: pointer;
+    background: #414141;
+}
+
+.loading {
+    text-align: center;
+    padding: 30px 0;
+}
+.job_box {
+    padding: 5px 3px;
+    border-bottom: 1px solid #EEE1C5;
+}
+.job_img {
+    margin: 8px 5px 8px 0;
+    width: 64px;
+    height: 64px;
+    float: left;
+}
+.item_status {
+    margin-left: 80px;
+}
+.bis {
+    height: 40px;
+}
+.current {
+    height: 40px;
+}
+
+.item_title {
+    line-height: 40px;
+	display: inline-block;
+    margin-right: 5px;
+}
+.item{
+    cursor: pointer;
+	background-image: url("icons/item_list.png");
+    width: 30px;
+    height: 30px;
+	display: inline-block;
+	vertical-align: bottom;
+    border: 2px solid #353535;
+    border-radius: 5px;
+    font-size: 10px;
+    text-align: right;
+    padding: 3px;
+}
+.item.normal {
+    border: 2px solid gray;
+}
+.item.crafted, .item.kuro {
+    border: 2px solid green;
+}
+.item.slate {
+    border: 2px solid #0063FF;
+}
+.item.augmented {
+    border: 2px solid #9400D3;
+}
+.item.savage {
+    border: 2px solid #FFA500;
+}
+.weapon {
+	background-position-x: 0;
+}
+.sub_weapon {
+    position: absolute;
+	background-position-x: -40px;
+}
+.head {
+    margin-left: 45px;
+	background-position-x: -80px;
+}
+.chest {
+	background-position-x: -120px;
+}
+.hands {
+	background-position-x: -160px;
+}
+.waist {
+	background-position-x: -200px;
+}
+.legs {
+	background-position-x: -240px;
+}
+.feet {
+	background-position-x: -280px;
+}
+.ears {
+    margin-left: 40px;
+	background-position-x: -320px;
+}
+.neck {
+	background-position-x: -360px;
+}
+.wrist {
+	background-position-x: -400px;
+}
+.ring_left {
+	background-position-x: -440px;
+}
+.ring_right {
+	background-position-x: -440px;
+}
+
+.sheet_body {
+    padding: 20px 0 10px 5px;
+}
+.submit_button {
+    vertical-align: bottom;
+    cursor: pointer;
+    height: 25px;
+}
+#find_error {
+    height: 25px;
+    vertical-align: bottom;
+    display: none;
+}
