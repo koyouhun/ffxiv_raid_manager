@@ -87,9 +87,9 @@ function show_fix() {
   });
 }
 
-function show_job(job, data_type) {
-  var target = $("#" + job).find("." + data_type);
-  $.each(JOB[job][data_type], function(data) {
+function show_job(job_name, data_type) {
+  var target = $("#" + job_name).find("." + data_type);
+  $.each(JOB[job_name][data_type], function(data) {
     $.each(data, function(part, item_type) {
       target.find("." + part)
             .removeClass('not_selected crafted slate augmented savage')
@@ -105,10 +105,15 @@ function load_team(uid) {
   $(".loading").show();
   $("#unique_id").text(uid);
   $("#team_name").text("로딩중...");
+
   $.ajax({
     method: 'GET',
     url: 'api/load?uid=' + uid,
     success: function(data) {
+      $(".loading").hide();
+      $(".fix_item_box").show();
+      $(".job_box").show();
+
       if (data['success'] === false) {
         $("#find_team").click();
         $("#team_name").text("존재하지 않는 공대 번호입니다.");
@@ -116,29 +121,19 @@ function load_team(uid) {
       }
       else {
         $("#find_error").hide();
-        $("#team_name").text(data['team_name']);
-        $.each(data['fix_list'], function(fix) {
-          var elem = $("#"+fix['name']);
-          elem.html("");
-          $.each(fix['list'], function(job) {
-            elem.append('<img class="fix_item_img" src="../icons/' + job + '.png">');
-          });
+        $("#team_name").text(data['name']);
+
+        $.each(FIX, function(fix_type) {
+          FIX[fix_type] = data[fix_type];
         });
-        $.each(data['job_list'], function(job) {
-          $.each(job['bis'], function(bis) {
-            var part = $("#"+job['name']).find("."+bis['part']);
-            part.removeClass('crafted slate augmented savage').addClass(bis['item_class']);
-            part.text(select_type_to_kor[bis['item_class']]);
-          });
-          $.each(job['current'], function(current) {
-            var part = $("#"+job['name']).find("."+current['part']);
-            part.removeClass('crafted slate augmented savage').addClass(current['item_class']);
-            part.text(select_type_to_kor[current['item_class']]);
-          });
+        $.each(JOB, function(job_name) {
+          JOB[job_name]['bis'] = item_status_to_dict(data[job_name + '_BIS']);
+          JOB[job_name]['current'] = item_status_to_dict(data[job_name + '_CURRENT']);
         });
         setTimeout(function() {
-          $.each(data['job_list'], function(job) {
-            $("#"+job['name']).show();
+          $.each(JOB, function(job_name) {
+            show_job(job_name, 'bis');
+            show_job(job_name, 'current');
           });
         }, 0);
       }

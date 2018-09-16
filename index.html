@@ -1,12 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>공대 시트</title>
-    <link href="{% static base.css %}" rel="stylesheet" type="text/css">
+    <link href="static/base.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="{% static base.js %}"></script>
+    <script src="static/base.js"></script>
 </head>
 <body>
 <section class="header">
@@ -594,7 +593,7 @@
         <div class="outer_1"><div class="outer_2"><div class="outer_3"><div class="sheet">
             <div class="sheet_title">공대 찾기</div>
             <div class="sheet_body">
-                <img src="icons/not_found.png" id="find_error"> 공대 번호: <input type="text" id="find_input" placeholder="공대 번호를 입력해주세요. ex) 13242">
+                <img src="static/icons/not_found.png" id="find_error"> 공대 번호: <input type="text" id="find_input" placeholder="공대 번호를 입력해주세요. ex) 13242">
                 <img src="static/icons/go.png" class="submit_button" id="find_submit">
             </div>
         </div></div></div></div>

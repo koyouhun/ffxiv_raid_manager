@@ -111,6 +111,15 @@ def save_job(request):
 			'success': False,
 			'message': 'Invalid job.'
 		})
+	if data_type == 'bis':
+		column = job + '_BIS'
+	elif data_type == 'current':
+		column = job + '_CURRENT'
+	else:
+		return JsonResponse({
+			'success': False,
+			'message': 'Invalid data_type.'
+		})
 	try:
 		team = Team.objects.get(id=id)
 	except Team.DoesNotExist:
@@ -119,13 +128,8 @@ def save_job(request):
 			'message': 'Invalid unique_id.'
 		})
 
-	if data_type == 'bis':
-		save_target = job + '_BIS'
-	else:
-		data_type = job
-
 	try:
-		Team.objects.filter(id=id).update(**{save_target: item_status})
+		Team.objects.filter(id=id).update(**{column: item_status})
 	except:
 		return JsonResponse({
 			'success': False,

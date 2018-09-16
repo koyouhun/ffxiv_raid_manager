@@ -44,25 +44,25 @@ class Team(models.Model):
     # 2^ 31~33: Bracelet
     # 2^ 34~36: Ring Left
     # 2^ 37~39: Ring Right
-    PLD = models.BigIntegerField(default=0)
-    WAR = models.BigIntegerField(default=0)
-    DRK = models.BigIntegerField(default=0)
+    PLD_CURRENT = models.BigIntegerField(default=0)
+    WAR_CURRENT = models.BigIntegerField(default=0)
+    DRK_CURRENT = models.BigIntegerField(default=0)
 
-    WHM = models.BigIntegerField(default=0)
-    SCH = models.BigIntegerField(default=0)
-    AST = models.BigIntegerField(default=0)
+    WHM_CURRENT = models.BigIntegerField(default=0)
+    SCH_CURRENT = models.BigIntegerField(default=0)
+    AST_CURRENT = models.BigIntegerField(default=0)
 
-    BRD = models.BigIntegerField(default=0)
-    MCH = models.BigIntegerField(default=0)
+    BRD_CURRENT = models.BigIntegerField(default=0)
+    MCH_CURRENT = models.BigIntegerField(default=0)
 
-    MNK = models.BigIntegerField(default=0)
-    NIN = models.BigIntegerField(default=0)
-    DRG = models.BigIntegerField(default=0)
-    SAM = models.BigIntegerField(default=0)
+    MNK_CURRENT = models.BigIntegerField(default=0)
+    NIN_CURRENT = models.BigIntegerField(default=0)
+    DRG_CURRENT = models.BigIntegerField(default=0)
+    SAM_CURRENT = models.BigIntegerField(default=0)
 
-    BLM = models.BigIntegerField(default=0)
-    SMN = models.BigIntegerField(default=0)
-    RDM = models.BigIntegerField(default=0)
+    BLM_CURRENT = models.BigIntegerField(default=0)
+    SMN_CURRENT = models.BigIntegerField(default=0)
+    RDM_CURRENT = models.BigIntegerField(default=0)
 
 
     PLD_BIS = models.BigIntegerField(default=0)
