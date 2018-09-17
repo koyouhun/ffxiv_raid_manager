@@ -34,7 +34,7 @@ class Team(models.Model):
     # 2^ 1~3: Weapon
     # 2^ 4~6: SubWeapon
     # 2^ 7~9: Head
-    # 2^ 10~12: Body
+    # 2^ 10~12: Chest
     # 2^ 13~15: Hands
     # 2^ 16~18: Waist
     # 2^ 19~21: Legs

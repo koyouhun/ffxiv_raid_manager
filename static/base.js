@@ -5,13 +5,21 @@ const select_type_to_kor = {
   'augmented': '석판보강',
   'savage': '영식',
 };
-const item_code = {
+const from_item_code = {
   0: 'not_selected',
   1: 'normal',
   2: 'crafted',
   3: 'slate',
   4: 'augmented',
   5: 'savage'
+}
+const to_item_code = {
+  'not_selected': 0,
+  'normal': 1,
+  'crafted': 2,
+  'slate': 3,
+  'augmented': 4,
+  'savage': 5
 }
 
 var unique_id = getQueryParam('unique_id') || readCookie('unique_id');
@@ -42,28 +50,25 @@ var JOB = {
   'RDM': {'bis': {}, 'current': {}}
 }
 
-function item_click() {
-  var pre_text = $(this).text();
-  `<div class="fix_add_list">
-      <img class="fix_add_icon" src="static/icons/PLD.png">
-      <img class="fix_add_icon" src="static/icons/WAR.png">
-      <img class="fix_add_icon" src="static/icons/DRK.png"><br>
-      <img class="fix_add_icon" src="static/icons/WHM.png">
-      <img class="fix_add_icon" src="static/icons/SCH.png">
-      <img class="fix_add_icon" src="static/icons/AST.png"><br>
-      <img class="fix_add_icon" src="static/icons/DRG.png">
-      <img class="fix_add_icon" src="static/icons/MNK.png">
-      <img class="fix_add_icon" src="static/icons/NIN.png">
-      <img class="fix_add_icon" src="static/icons/SAM.png"><br>
-      <img class="fix_add_icon" src="static/icons/BRD.png">
-      <img class="fix_add_icon" src="static/icons/MCH.png"><br>
-      <img class="fix_add_icon" src="static/icons/BLM.png">
-      <img class="fix_add_icon" src="static/icons/SMN.png">
-      <img class="fix_add_icon" src="static/icons/RDM.png">
-  </div>`
+function make_team(name) {
+  $.ajax({
+    method: 'POST',
+    url: 'api/make',
+    contentType : 'application/json',
+    data: JSON.stringify({
+      'name': name
+    }),
+    success: function(data) {
+      if (data['success']) {
+        indow.location.replace(window.location.origin+'?unique_id='+data['unique_id']);
+      } else {
+        alert("사용불가능한 공대 이름입니다!")
+      }
+    }
+  });
 }
 
-function save_fix(new_job, fix_type) {
+function save_fix(fix_type) {
   $.ajax({
     method: 'POST',
     url: 'api/save/fix',
@@ -100,7 +105,7 @@ function save_job(job, data_type) {
 
 function show_fix() {
   $.each(FIX, function(fix_type, job_list) {
-    var target = $(fix_type);
+    var target = $(fix_type).find('.job_list');
     target.html("");
     $.each(job_list, function(job) {
       target.append('<img class="fix_job" src="icons/' + job + '.png">');
@@ -114,7 +119,7 @@ function show_job(job_name, data_type) {
     $.each(data, function(part, item_type) {
       target.find("." + part)
             .removeClass('not_selected crafted slate augmented savage')
-            .addClass(item_code[item_type]);
+            .addClass(from_item_code[item_type]);
     });
   });
 }
@@ -139,6 +144,7 @@ function load_team(uid) {
         $("#find_team").click();
         $("#team_name").text("존재하지 않는 공대 번호입니다.");
         $("#find_error").show();
+        unique_id = undefined;
       }
       else {
         $("#find_error").hide();
@@ -168,7 +174,7 @@ function item_status_to_dict(item_status) {
     'weapon': (item_status = item_status >>> 1) % 2,
     'sub_weapon': (item_status = item_status >>> 3) % 2,
     'head': (item_status = item_status >>> 3) % 2,
-    'body': (item_status = item_status >>> 3) % 2,
+    'chest': (item_status = item_status >>> 3) % 2,
     'hands': (item_status = item_status >>> 3) % 2,
     'waist': (item_status = item_status >>> 3) % 2,
     'legs': (item_status = item_status >>> 3) % 2,
@@ -187,7 +193,7 @@ function dict_to_item_status(dict) {
   (dict['weapon'] << a) +
   (dict['sub_weapon'] << (a = a+3)) +
   (dict['head'] << (a = a+3)) +
-  (dict['body'] << (a = a+3)) +
+  (dict['chest'] << (a = a+3)) +
   (dict['hands'] << (a = a+3)) +
   (dict['waist'] << (a = a+3)) +
   (dict['legs'] << (a = a+3)) +
@@ -230,22 +236,72 @@ function setCookie(name, value, days) {
     date.setTime(date.getTime() + (days*24*60*60*1000));
     text += (";expires=" + date.toUTCString());
   }
-  text += (";domain=wishket.com");
   text += ";path=/";
   document.cookie = text;
 }
 
 $(document).on('ready', function() {
+  $(".item").each(function() {
+    $(this).html(
+      '<div class="pre_item"><div class="item_img"></div></div>'+
+      '<div class="item_select_list">'+
+        '<div class="outer_1"><div class="outer_2"><div class="outer_3"><div class="sheet">'+
+          '<div class="item_select not_selected"><div class="item_select_img"></div></div>'+
+          '<div class="item_select normal"><div class="item_select_img">일반</div></div>'+
+          '<div class="item_select crafted"><div class="item_select_img">제작</div></div>'+
+          '<div class="item_select slate"><div class="item_select_img">석판</div></div>'+
+          '<div class="item_select augmented"><div class="item_select_img">보강</div></div>'+
+          '<div class="item_select savage"><div class="item_select_img">영식</div></div>'+
+        '</div></div></div></div>'+
+      '</div>'
+    );
+  });
+
+  $(".fix_add_icon").on('click', function() {
+    if (unique_id === undefined) {
+      alert("공대를 찾거나 생성해주세요!");
+      return
+    }
+    var fix_type = $(this).parents('.fix_item_box').attr('id');
+    var job = $(this).attr('job');
+    FIX[fix_type].push(job);
+    save_fix(fix_type);
+  });
+
+  setTimeout(function() {
+    $(".item_select").on('click', function() {
+      if (unique_id === undefined) {
+        alert("공대를 찾거나 생성해주세요!");
+        return
+      }
+      var job = $(this).parents('.job_box').attr('id');
+      var item_part = $(this).parents('item').attr('class').split(' ')[1];
+      var item_type = $(this).parent().attr('class').split(' ')[1];
+      var data_type = $(this).parents('item').parent().attr('class');
+      JOB[job][data_type][item_part] = to_item_code[item_type];
+      save_job(job, data_type);
+    });
+  }, 0);
+
+  $("#find_submit").on('click', function() {
+    window.location.replace(window.location.origin+'?unique_id='+$("#find_input").val());
+  });
+
+  $("#make_submit").on('click', function() {
+    make_team($("#make_input").val());
+  });
+
   $(".menu").on('click', function() {
     $(".menu").removeClass('active');
     $(this).addClass('active');
     $(".tab").hide();
     $("."+$(this).attr('id')).show();
   });
+
   if (unique_id === undefined) {
     $("#find_team").click();
   } else {
     $("#overview").click();
-    load_data(unique_id);
+    load_team(unique_id);
   }
 });

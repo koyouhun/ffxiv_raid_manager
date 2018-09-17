@@ -84,6 +84,7 @@ input:focus {
 
 .tab {
     display: none;
+    margin-bottom: 50px;
 }
 .body {
     background: #fff;
@@ -170,80 +171,103 @@ input:focus {
 	display: inline-block;
     margin-right: 5px;
 }
-.item{
+.item, .item_select{
     cursor: pointer;
-	background-image: url("icons/item_list.png");
-    width: 30px;
-    height: 30px;
 	display: inline-block;
 	vertical-align: bottom;
-    border: 2px solid #353535;
-    border-radius: 5px;
     font-size: 10px;
     text-align: right;
+}
+.item .item_img, .item_select .item_select_img {
+    background-image: url("icons/item_list.png");
+    width: 30px;
+    height: 30px;
     padding: 3px;
+    border: 2px solid #353535;
+    border-radius: 5px;
+}
+.item_select {
+    display: inline-block;
+    margin-left: 5px;
+}
+.item_select:first-of-type {
+    margin: 0;
 }
 .item_select_list {
     position: absolute;
-    margin: -15px 0 0 35px;
+    margin-left: -105px;
     cursor: initial;
+    z-index: 100;
+    display: none;
+    width: 295px;
+    background: #fff;
+    border-radius: 6px;
 }
-.item.normal {
+.item:hover .item_select_list {
+    display: block;
+}
+.item.normal .item_img, .item_select.normal .item_select_img {
     border: 2px solid gray;
 }
-.item.crafted, .item.kuro {
+.item.crafted .item_img, .item_select.crafted .item_select_img {
     border: 2px solid green;
 }
-.item.slate {
+.item.slate .item_img, .item_select.slate .item_select_img {
     border: 2px solid #0063FF;
 }
-.item.augmented {
+.item.augmented .item_img, .item_select.augmented .item_select_img {
     border: 2px solid #9400D3;
 }
-.item.savage {
+.item.savage .item_img, .item_select.savage .item_select_img {
     border: 2px solid #FFA500;
 }
-.weapon {
+.weapon .item_img, .weapon .item_select_img {
 	background-position-x: 0;
 }
 .sub_weapon {
     position: absolute;
-	background-position-x: -40px;
     z-index: 20;
+}
+.sub_weapon .item_img, .sub_weapon .item_select_img {
+    background-position-x: -40px;
 }
 .head {
     margin-left: 45px;
+}
+.head .item_img, .head .item_select_img {
 	background-position-x: -80px;
 }
-.chest {
+.chest .item_img, .chest .item_select_img {
 	background-position-x: -120px;
 }
-.hands {
+.hands .item_img, .hands .item_select_img {
 	background-position-x: -160px;
 }
-.waist {
+.waist .item_img, .waist .item_select_img {
 	background-position-x: -200px;
 }
-.legs {
+.legs .item_img, .legs .item_select_img {
 	background-position-x: -240px;
 }
-.feet {
+.feet .item_img, .feet .item_select_img {
 	background-position-x: -280px;
 }
 .ears {
     margin-left: 40px;
+}
+.ears .item_img, .ears .item_select_img {
 	background-position-x: -320px;
 }
-.neck {
+.neck .item_img, .neck .item_select_img {
 	background-position-x: -360px;
 }
-.wrist {
+.wrist .item_img, .wrist .item_select_img {
 	background-position-x: -400px;
 }
-.ring_left {
+.ring_left .item_img, .ring_left .item_select_img {
 	background-position-x: -440px;
 }
-.ring_right {
+.ring_right .item_img, .ring_right .item_select_img {
 	background-position-x: -440px;
 }
 
