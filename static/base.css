@@ -109,13 +109,35 @@ input:focus {
 	vertical-align: bottom;
 }
 .add_job {
+    position: absolute;
     display: inline-block;
     line-height: 30px;
     padding: 4px;
     margin-left: 5px;
     border: 1px solid #616161;
-    cursor: pointer;
     background: #414141;
+    z-index: 100;
+}
+.fix_add_icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin: 5px 3px;
+}
+.fix_add_list {
+    float: right;
+    padding: 5px;
+    line-height: 0;
+    display: none;
+}
+.fix_add_button {
+    line-height: 30px;
+}
+.add_job:hover .fix_add_button {
+    display: none;
+}
+.add_job:hover .fix_add_list {
+    display: block;
 }
 
 .loading {
@@ -161,6 +183,11 @@ input:focus {
     text-align: right;
     padding: 3px;
 }
+.item_select_list {
+    position: absolute;
+    margin: -15px 0 0 35px;
+    cursor: initial;
+}
 .item.normal {
     border: 2px solid gray;
 }
@@ -182,6 +209,7 @@ input:focus {
 .sub_weapon {
     position: absolute;
 	background-position-x: -40px;
+    z-index: 20;
 }
 .head {
     margin-left: 45px;

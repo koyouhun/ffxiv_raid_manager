@@ -42,6 +42,27 @@ var JOB = {
   'RDM': {'bis': {}, 'current': {}}
 }
 
+function item_click() {
+  var pre_text = $(this).text();
+  `<div class="fix_add_list">
+      <img class="fix_add_icon" src="static/icons/PLD.png">
+      <img class="fix_add_icon" src="static/icons/WAR.png">
+      <img class="fix_add_icon" src="static/icons/DRK.png"><br>
+      <img class="fix_add_icon" src="static/icons/WHM.png">
+      <img class="fix_add_icon" src="static/icons/SCH.png">
+      <img class="fix_add_icon" src="static/icons/AST.png"><br>
+      <img class="fix_add_icon" src="static/icons/DRG.png">
+      <img class="fix_add_icon" src="static/icons/MNK.png">
+      <img class="fix_add_icon" src="static/icons/NIN.png">
+      <img class="fix_add_icon" src="static/icons/SAM.png"><br>
+      <img class="fix_add_icon" src="static/icons/BRD.png">
+      <img class="fix_add_icon" src="static/icons/MCH.png"><br>
+      <img class="fix_add_icon" src="static/icons/BLM.png">
+      <img class="fix_add_icon" src="static/icons/SMN.png">
+      <img class="fix_add_icon" src="static/icons/RDM.png">
+  </div>`
+}
+
 function save_fix(new_job, fix_type) {
   $.ajax({
     method: 'POST',
