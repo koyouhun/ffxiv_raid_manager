@@ -80,11 +80,6 @@ def save_fix(request):
             'success': False,
             'message': 'Invalid fix_type.'
         })
-    if not job_list:
-        return JsonResponse({
-            'success': False,
-            'message': 'Invalid job.'
-        })
     for job in job_list:
         if job not in Team.JOB:
             return JsonResponse({
@@ -129,8 +124,6 @@ def save_job(request):
             'message': 'Invalid unique_id.'
         })
 
-    print(column)
-    print(item_status)
     Team.objects.filter(id=id).update(**{column: item_status})
     try:
         Team.objects.filter(id=id).update(**{column: item_status})
