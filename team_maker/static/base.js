@@ -226,9 +226,9 @@ function dict_to_item_status(dict) {
   (dict['feet'] << (a = a+3)) +
   (dict['ears'] << (a = a+3)) +
   (dict['neck'] << (a = a+3)) +
-  (dict['wrist'] << (a = a*8)) + // 2^31 (overflow)
-  (dict['ring_left'] << (a = a*8)) + // 2^34 (overflow)
-  (dict['ring_right'] << (a*8)) // 2^37 (overflow)
+  ((dict['wrist'] << a) * 8) + // 2^31 (overflow)
+  ((dict['ring_left'] << a) * 64) + // 2^34 (overflow)
+  ((dict['ring_right'] << a) * 512) // 2^37 (overflow)
 }
 
 function getQueryParam(name) {
