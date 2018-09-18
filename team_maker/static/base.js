@@ -335,10 +335,10 @@ $(document).on('ready', function() {
   });
 
   $(document).on('click', function(e) {
-    if (['item', 'pre_item', 'item_img'].indexOf($(e.target).attr('class')) === -1) {
+    if ($(e.target).attr('class') !== 'item_img') {
       $(".item").removeClass('active');
     }
-    if (['add_job', 'fix_add_button'].indexOf($(e.target).attr('class')) === -1) {
+    if ($(e.target).attr('class') !== 'fix_add_button') {
       $(".add_job").removeClass('active');
     }
   });
