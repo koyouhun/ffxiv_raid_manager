@@ -197,9 +197,9 @@ function load_team(uid) {
 function item_status_to_dict(item_status) {
   return {
     'exist': item_status % 2, // 39 (overflow)
-    'weapon': (item_status = (item_status - (item_status % 2)) / 2) % 8, // 39 (overflow)
-    'sub_weapon': (item_status = item_status / 8) % 8, // 36 (overflow)
-    'head': (item_status = item_status / 8) % 8, // 33 (overflow)
+    'weapon': Math.floor((item_status = (item_status - (item_status % 2)) / 2)) % 8, // 39 (overflow)
+    'sub_weapon': Math.floor((item_status = item_status / 8)) % 8, // 36 (overflow)
+    'head': Math.floor((item_status = item_status / 8)) % 8, // 33 (overflow)
     'chest': (item_status = item_status >>> 3) % 8,
     'hands': (item_status = item_status >>> 3) % 8,
     'waist': (item_status = item_status >>> 3) % 8,
@@ -321,7 +321,7 @@ $(document).on('ready', function() {
   $("#make_input").on('keydown', function(e) {
     if (e.which === 13) {
       e.preventDefault();
-      $("#find_submit").click();
+      $("#make_submit").click();
     }
   });
   $("#make_submit").on('click', function() {
