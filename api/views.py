@@ -1,4 +1,5 @@
 import json
+from django.utils.encoding import force_text
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
@@ -7,7 +8,7 @@ from api.models import Team
 
 @csrf_exempt
 def make_team(request):
-    data = json.loads(request.body)
+    data = json.loads(force_text(request.body))
     name = data.get('name')
 
     if not name:
@@ -32,7 +33,7 @@ def make_team(request):
 
 @csrf_exempt
 def search_team(request):
-    data = json.loads(request.body)
+    data = json.loads(force_text(request.body))
     id = data.get('id')
     if not id:
         return JsonResponse({'success': False})
@@ -69,7 +70,7 @@ def load_team(request):
 
 @csrf_exempt
 def save_fix(request):
-    data = json.loads(request.body)
+    data = json.loads(force_text(request.body))
     id = data.get('unique_id')
     fix_type = data.get('fix_type')
     job_list = data.get('job_list')
@@ -102,7 +103,7 @@ def save_fix(request):
 
 @csrf_exempt
 def save_job(request):
-    data = json.loads(request.body)
+    data = json.loads(force_text(request.body))
     id = data.get('unique_id')
     job = data.get('job')
     data_type = data.get('data_type')
