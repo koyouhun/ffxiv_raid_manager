@@ -205,9 +205,9 @@ function item_status_to_dict(item_status) {
     'waist': (item_status = item_status >>> 3) % 8,
     'legs': (item_status = item_status >>> 3) % 8,
     'feet': (item_status = item_status >>> 3) % 8,
-    'earrings': (item_status = item_status >>> 3) % 8,
-    'necklace': (item_status = item_status >>> 3) % 8,
-    'bracelet': (item_status = item_status >>> 3) % 8,
+    'ears': (item_status = item_status >>> 3) % 8,
+    'neck': (item_status = item_status >>> 3) % 8,
+    'wrist': (item_status = item_status >>> 3) % 8,
     'ring_left': (item_status = item_status >>> 3) % 8,
     'ring_right': (item_status >>> 3) % 8
   }
@@ -224,9 +224,9 @@ function dict_to_item_status(dict) {
   (dict['waist'] << (a = a+3)) +
   (dict['legs'] << (a = a+3)) +
   (dict['feet'] << (a = a+3)) +
-  (dict['earrings'] << (a = a+3)) +
-  (dict['necklace'] << (a = a+3)) +
-  (dict['bracelet'] << (a = a+3)) +
+  (dict['ears'] << (a = a+3)) +
+  (dict['neck'] << (a = a+3)) +
+  (dict['wrist'] << (a = a+3)) +
   (dict['ring_left'] << (a = a+3)) +
   (dict['ring_right'] << (a+3))
 }
