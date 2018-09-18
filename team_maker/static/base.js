@@ -3,7 +3,7 @@ const select_type_to_kor = {
   'crafted': '제작',
   'normal': '일반',
   'slate': '석판',
-  'augmented': '석판보강',
+  'augmented': '보강',
   'savage': '영식',
 };
 const from_item_code = {
