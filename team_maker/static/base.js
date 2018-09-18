@@ -217,8 +217,8 @@ function dict_to_item_status(dict) {
   var a = 1;
   return dict['exist'] +
   (dict['weapon'] << a) +
-  (dict['sub_weapon'] << (a = a+3))
-  (dict['head'] << (a = a+3))
+  (dict['sub_weapon'] << (a = a+3)) +
+  (dict['head'] << (a = a+3)) +
   (dict['chest'] << (a = a+3)) +
   (dict['hands'] << (a = a+3)) +
   (dict['waist'] << (a = a+3)) +
