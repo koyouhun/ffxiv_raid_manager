@@ -1,8 +1,6 @@
 # FFXIV Raid Manager
 #### Web-based Final Fantasy XIV Raid Manager
 
-# This project is not completed! (90% completed)
-
 # Overview
 - Final Fantasy XIV Raid Manager
 - Web Based (Django)
