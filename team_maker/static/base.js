@@ -1,4 +1,5 @@
 const select_type_to_kor = {
+  'not_selected': '',
   'crafted': '제작',
   'normal': '일반',
   'slate': '석판',
@@ -12,7 +13,7 @@ const from_item_code = {
   3: 'slate',
   4: 'augmented',
   5: 'savage'
-}
+};
 const to_item_code = {
   'not_selected': 0,
   'normal': 1,
@@ -20,14 +21,14 @@ const to_item_code = {
   'slate': 3,
   'augmented': 4,
   'savage': 5
-}
+};
 
 var unique_id = getQueryParam('unique_id') || readCookie('unique_id');
 var FIX = {
   'fix_left': [],
   'fix_right': [],
   'fix_weapon': []
-}
+};
 var JOB = {
   'PLD': {'bis': {}, 'current': {}},
   'WAR': {'bis': {}, 'current': {}},
@@ -48,7 +49,7 @@ var JOB = {
   'BLM': {'bis': {}, 'current': {}},
   'SMN': {'bis': {}, 'current': {}},
   'RDM': {'bis': {}, 'current': {}}
-}
+};
 
 function make_team(name) {
   $.ajax({
@@ -60,7 +61,7 @@ function make_team(name) {
     }),
     success: function(data) {
       if (data['success']) {
-        indow.location.replace(window.location.origin+'?unique_id='+data['unique_id']);
+        window.location.replace(window.location.origin+'?unique_id='+data['unique_id']);
       } else {
         alert("사용불가능한 공대 이름입니다!")
       }
@@ -79,17 +80,16 @@ function save_fix(fix_type) {
       'job_list': FIX[fix_type]
     }),
     success: function(data) {
-      var target = $(fix_type);
-      target.html("");
-      $.each(FIX[fix_type], function(job) {
-        target.append('<img class="fix_job" src="icons/' + job + '.png">');
-      });
+      if (data['success']) {
+        show_fix();
+      } else {
+        alert(data['message'])
+      }
     }
   });
 }
 
 function save_job(job, data_type) {
-  var job = elem.parent().parent().parent().attr('id');
   $.ajax({
     method: 'POST',
     url: 'api/save/job',
@@ -98,29 +98,54 @@ function save_job(job, data_type) {
       'unique_id': unique_id,
       'job': job,
       'data_type': data_type,
-      'item_status': JOB[job]
-    })
+      'item_status': dict_to_item_status(JOB[job][data_type])
+    }),
+    success: function(data) {
+      if (data['success']) {
+        show_job(job, data_type);
+        $(".item").removeClass('active');
+      } else {
+        alert(data['message'])
+      }
+    }
   });
 }
 
 function show_fix() {
   $.each(FIX, function(fix_type, job_list) {
-    var target = $(fix_type).find('.job_list');
+    var target = $('#'+fix_type).find('.job_list');
     target.html("");
-    $.each(job_list, function(job) {
-      target.append('<img class="fix_job" src="icons/' + job + '.png">');
+    $.each(job_list, function(_, job) {
+      target.append('<img class="fix_job" src="static/icons/' + job + '.png">');
     });
   });
+  setTimeout(function() {
+    $(".fix_job").on('click', function() {
+      if (confirm('삭제하시겠습니까?')) {
+        var index = $(this).parent().children().index($(this));
+        var fix_type = $(this).parents('.fix_item_box').attr('id');
+        FIX[fix_type].splice(index, 1);
+        save_fix(fix_type);
+      }
+    });
+  }, 0);
 }
 
 function show_job(job_name, data_type) {
   var target = $("#" + job_name).find("." + data_type);
-  $.each(JOB[job_name][data_type], function(data) {
-    $.each(data, function(part, item_type) {
+  $.each(JOB[job_name][data_type], function(part, item_type) {
+    $("#"+job_name).show();
+    if (part === 'exist' && item_type === 1) {
+      $("#"+job_name).show();
+    } else {
       target.find("." + part)
             .removeClass('not_selected crafted slate augmented savage')
             .addClass(from_item_code[item_type]);
-    });
+      target.find("." + part)
+            .find(".pre_item")
+            .find('.item_img')
+            .text(select_type_to_kor[from_item_code[item_type]]);
+    }
   });
 }
 
@@ -134,17 +159,17 @@ function load_team(uid) {
 
   $.ajax({
     method: 'GET',
-    url: 'api/load?uid=' + uid,
+    url: 'api/load?unique_id=' + uid,
     success: function(data) {
       $(".loading").hide();
       $(".fix_item_box").show();
-      $(".job_box").show();
 
       if (data['success'] === false) {
         $("#find_team").click();
-        $("#team_name").text("존재하지 않는 공대 번호입니다.");
+        $("#team_name").text("존재하지 않는 공대 코드입니다.");
         $("#find_error").show();
         unique_id = undefined;
+        alert("존재하지 않는 공대 코드입니다.")
       }
       else {
         $("#find_error").hide();
@@ -162,6 +187,7 @@ function load_team(uid) {
             show_job(job_name, 'bis');
             show_job(job_name, 'current');
           });
+          show_fix();
         }, 0);
       }
     }
@@ -171,19 +197,19 @@ function load_team(uid) {
 function item_status_to_dict(item_status) {
   return {
     'exist': item_status % 2,
-    'weapon': (item_status = item_status >>> 1) % 2,
-    'sub_weapon': (item_status = item_status >>> 3) % 2,
-    'head': (item_status = item_status >>> 3) % 2,
-    'chest': (item_status = item_status >>> 3) % 2,
-    'hands': (item_status = item_status >>> 3) % 2,
-    'waist': (item_status = item_status >>> 3) % 2,
-    'legs': (item_status = item_status >>> 3) % 2,
-    'feet': (item_status = item_status >>> 3) % 2,
-    'earrings': (item_status = item_status >>> 3) % 2,
-    'necklace': (item_status = item_status >>> 3) % 2,
-    'bracelet': (item_status = item_status >>> 3) % 2,
-    'ring_left': (item_status = item_status >>> 3) % 2,
-    'ring_right': (item_status = item_status >>> 3) % 2
+    'weapon': (item_status = item_status >>> 1) % 8,
+    'sub_weapon': (item_status = item_status >>> 3) % 8,
+    'head': (item_status = item_status >>> 3) % 8,
+    'chest': (item_status = item_status >>> 3) % 8,
+    'hands': (item_status = item_status >>> 3) % 8,
+    'waist': (item_status = item_status >>> 3) % 8,
+    'legs': (item_status = item_status >>> 3) % 8,
+    'feet': (item_status = item_status >>> 3) % 8,
+    'earrings': (item_status = item_status >>> 3) % 8,
+    'necklace': (item_status = item_status >>> 3) % 8,
+    'bracelet': (item_status = item_status >>> 3) % 8,
+    'ring_left': (item_status = item_status >>> 3) % 8,
+    'ring_right': (item_status >>> 3) % 8
   }
 }
 
@@ -272,30 +298,57 @@ $(document).on('ready', function() {
     $(".item_select").on('click', function() {
       if (unique_id === undefined) {
         alert("공대를 찾거나 생성해주세요!");
-        return
+      } else {
+        var job = $(this).parents('.job_box').attr('id');
+        var item_part = $(this).parents('.item').attr('class').split(' ')[1];
+        var item_type = $(this).attr('class').split(' ')[1];
+        var data_type = $(this).parents('.item').parent().attr('class');
+        JOB[job][data_type][item_part] = to_item_code[item_type];
+        save_job(job, data_type);
       }
-      var job = $(this).parents('.job_box').attr('id');
-      var item_part = $(this).parents('item').attr('class').split(' ')[1];
-      var item_type = $(this).parent().attr('class').split(' ')[1];
-      var data_type = $(this).parents('item').parent().attr('class');
-      JOB[job][data_type][item_part] = to_item_code[item_type];
-      save_job(job, data_type);
     });
   }, 0);
 
+  $("#find_input").on('keydown', function(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      $("#find_submit").click();
+    }
+  });
   $("#find_submit").on('click', function() {
     window.location.replace(window.location.origin+'?unique_id='+$("#find_input").val());
   });
-
+  $("#make_input").on('keydown', function(e) {
+    e.preventDefault();
+    if (e.which === 13) {
+      $("#find_submit").click();
+    }
+  });
   $("#make_submit").on('click', function() {
     make_team($("#make_input").val());
   });
-
   $(".menu").on('click', function() {
     $(".menu").removeClass('active');
     $(this).addClass('active');
     $(".tab").hide();
     $("."+$(this).attr('id')).show();
+  });
+
+  $(document).on('click', function(e) {
+    if ($(e.target).attr('class') !== 'item_img') {
+      $(".item").removeClass('active');
+    }
+    if ($(e.target).attr('class') !== 'fix_add_button') {
+      $(".add_job").removeClass('active');
+    }
+  });
+  $(".item").on('click', function() {
+    $(".item").removeClass('active');
+    $(this).addClass('active');
+  });
+  $(".add_job").on('click', function() {
+    $(".add_job").removeClass('active');
+    $(this).addClass('active');
   });
 
   if (unique_id === undefined) {

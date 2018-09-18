@@ -109,6 +109,12 @@ input:focus {
     height: 40px;
 	vertical-align: bottom;
 }
+.fix_job {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    cursor: pointer;
+}
 .add_job {
     position: absolute;
     display: inline-block;
@@ -118,6 +124,10 @@ input:focus {
     border: 1px solid #616161;
     background: #414141;
     z-index: 100;
+    cursor: pointer
+}
+.add_job.active {
+    cursor: initial;
 }
 .fix_add_icon {
     width: 40px;
@@ -134,10 +144,10 @@ input:focus {
 .fix_add_button {
     line-height: 30px;
 }
-.add_job:hover .fix_add_button {
+.add_job.active .fix_add_button {
     display: none;
 }
-.add_job:hover .fix_add_list {
+.add_job.active .fix_add_list {
     display: block;
 }
 
@@ -203,7 +213,7 @@ input:focus {
     background: #fff;
     border-radius: 6px;
 }
-.item:hover .item_select_list {
+.item.active .item_select_list {
     display: block;
 }
 .item.normal .item_img, .item_select.normal .item_select_img {

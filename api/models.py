@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 
-# Create your models here.
+
 class Team(models.Model):
     FIX = ['fix_weapon', 'fix_left', 'fix_right']
     JOB = [
@@ -16,7 +16,7 @@ class Team(models.Model):
     name = models.CharField(max_length=512)
 
     # Fix Field
-    # Comma seperated string
+    # Comma separated string
     # ex) PLD,WAR,NIN
     fix_weapon = models.CharField(max_length=128, default="")
     fix_left = models.CharField(max_length=128, default="")
