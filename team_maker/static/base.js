@@ -319,8 +319,8 @@ $(document).on('ready', function() {
     window.location.replace(window.location.origin+'?unique_id='+$("#find_input").val());
   });
   $("#make_input").on('keydown', function(e) {
-    e.preventDefault();
     if (e.which === 13) {
+      e.preventDefault();
       $("#find_submit").click();
     }
   });
