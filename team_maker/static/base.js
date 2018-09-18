@@ -134,7 +134,7 @@ function show_fix() {
 function show_job(job_name, data_type) {
   var target = $("#" + job_name).find("." + data_type);
   $.each(JOB[job_name][data_type], function(part, item_type) {
-    $("#"+job_name).show();
+    // $("#"+job_name).show();
     if (part === 'exist' && item_type === 1) {
       $("#"+job_name).show();
     } else {
