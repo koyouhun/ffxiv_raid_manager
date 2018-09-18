@@ -200,7 +200,7 @@ function item_status_to_dict(item_status) {
     'weapon': (item_status = Math.floor((item_status - (item_status % 2)) / 2)) % 8, // 39 (overflow)
     'sub_weapon': (item_status = Math.floor(item_status / 8)) % 8, // 36 (overflow)
     'head': (item_status = Math.floor(item_status / 8)) % 8, // 33 (overflow)
-    'chest': (item_status = item_status >>> 3) % 8,
+    'chest': (item_status = Math.floor(item_status / 8)) % 8, // 30 (overflow)
     'hands': (item_status = item_status >>> 3) % 8,
     'waist': (item_status = item_status >>> 3) % 8,
     'legs': (item_status = item_status >>> 3) % 8,
