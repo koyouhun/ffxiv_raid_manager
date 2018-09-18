@@ -7,6 +7,8 @@
 - Final Fantasy XIV Raid Manager
 - Web Based (Django)
 
+![example-img]
+
 # Install (Linux Ubuntu)
 - Python 2, 3 supported
 - use lo
@@ -40,4 +42,4 @@ pip install -r requirements.txt
 vi team_maker/settings.py
 ```
 
-[example-img]: https://github.com/koyouhun/drf_swagger/blob/master/img/web.png?raw=true
+[example-img]: https://github.com/koyouhun/ffxiv_raid_manager/blob/master/index.png?raw=true
