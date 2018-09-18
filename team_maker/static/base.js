@@ -196,10 +196,10 @@ function load_team(uid) {
 
 function item_status_to_dict(item_status) {
   return {
-    'exist': item_status % 2,
-    'weapon': (item_status = item_status >>> 1) % 8,
-    'sub_weapon': (item_status = item_status >>> 3) % 8,
-    'head': (item_status = item_status >>> 3) % 8,
+    'exist': item_status % 2, // 39 (overflow)
+    'weapon': (item_status = (item_status - (item_status % 2)) / 2) % 8, // 39 (overflow)
+    'sub_weapon': (item_status = item_status / 8) % 8, // 36 (overflow)
+    'head': (item_status = item_status / 8) % 8, // 33 (overflow)
     'chest': (item_status = item_status >>> 3) % 8,
     'hands': (item_status = item_status >>> 3) % 8,
     'waist': (item_status = item_status >>> 3) % 8,
@@ -217,8 +217,8 @@ function dict_to_item_status(dict) {
   var a = 1;
   return dict['exist'] +
   (dict['weapon'] << a) +
-  (dict['sub_weapon'] << (a = a+3)) +
-  (dict['head'] << (a = a+3)) +
+  (dict['sub_weapon'] << (a = a+3))
+  (dict['head'] << (a = a+3))
   (dict['chest'] << (a = a+3)) +
   (dict['hands'] << (a = a+3)) +
   (dict['waist'] << (a = a+3)) +
@@ -226,9 +226,9 @@ function dict_to_item_status(dict) {
   (dict['feet'] << (a = a+3)) +
   (dict['ears'] << (a = a+3)) +
   (dict['neck'] << (a = a+3)) +
-  (dict['wrist'] << (a = a+3)) +
-  (dict['ring_left'] << (a = a+3)) +
-  (dict['ring_right'] << (a+3))
+  (dict['wrist'] << (a = a*8)) + // 2^31 (overflow)
+  (dict['ring_left'] << (a = a*8)) + // 2^34 (overflow)
+  (dict['ring_right'] << (a*8)) // 2^37 (overflow)
 }
 
 function getQueryParam(name) {
